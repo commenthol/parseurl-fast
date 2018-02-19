@@ -1,0 +1,16 @@
+node_modules/
+
+benchmark/
+coverage/
+docs/
+test/
+tmp/
+
+*.tgz
+*.log
+.*
+
+karma.conf.js
+webpack.config.js
+
+yarn.lock

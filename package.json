@@ -1,0 +1,46 @@
+{
+  "name": "parseurl-fast",
+  "version": "1.0.0-0",
+  "description": "A fast url parser",
+  "keywords": [],
+  "homepage": "https://github.com/commenthol/parseurl-fast#readme",
+  "bugs": {
+    "url": "https://github.com/commenthol/parseurl-fast/issues"
+  },
+  "license": "MIT",
+  "author": "Commenthol <commenthol@gmail.com>",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/commenthol/parseurl-fast.git"
+  },
+  "scripts": {
+    "all": "npm run lint && npm test",
+    "benchmark": "node benchmark/dl.js && node benchmark",
+    "clean": "rimraf benchmark/url.js node_modules",
+    "cover": "nyc -r lcov -r text npm test",
+    "lint": "eslint --cache '**/*.js'",
+    "redos": "redos index.js",
+    "test": "mocha"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "benchmark": "^2.1.4",
+    "eslint": "^4.16.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^6.0.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "mocha": "^5.0.0",
+    "nyc": "^11.4.1",
+    "parseurl": "^1.3.2",
+    "redos": "^1.0.1"
+  },
+  "engines": {
+    "node": ">=6.0.0"
+  }
+}

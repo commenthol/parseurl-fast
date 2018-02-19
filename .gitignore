@@ -1,0 +1,23 @@
+node_modules/
+
+# coverage
+.nyc_output/
+coverage/
+
+dist/
+lib/
+tmp/
+
+benchmark/url.js
+
+.eslintcache
+*.tgz
+*.log
+
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*

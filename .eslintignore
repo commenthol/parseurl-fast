@@ -1,0 +1,4 @@
+coverage
+dist
+lib
+benchmark/url.js

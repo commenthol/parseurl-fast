@@ -9,6 +9,9 @@ lib/
 tmp/
 
 benchmark/url.js
+benchmark/comp.js
+benchmark/old.js
+test/fixtures/url-tests.js
 
 .eslintcache
 *.tgz

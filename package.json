@@ -2,7 +2,11 @@
   "name": "parseurl-fast",
   "version": "1.0.0",
   "description": "A fast url parser",
-  "keywords": [],
+  "keywords": [
+    "fast",
+    "url",
+    "parser"
+  ],
   "homepage": "https://github.com/commenthol/parseurl-fast#readme",
   "bugs": {
     "url": "https://github.com/commenthol/parseurl-fast/issues"
@@ -19,15 +23,16 @@
   },
   "scripts": {
     "all": "npm run lint && npm test",
-    "benchmark": "node benchmark/dl.js && node benchmark",
-    "clean": "rimraf benchmark/url.js node_modules",
-    "cover": "nyc -r lcov -r text npm test",
+    "benchmark": "node benchmark",
+    "clean": "rimraf node_modules",
+    "coverage": "nyc -r lcov -r text npm test",
     "lint": "eslint --cache '**/*.js'",
     "redos": "redos index.js",
-    "test": "mocha"
+    "test": "node scripts/dl.js && mocha"
   },
   "dependencies": {},
   "devDependencies": {
+    "bench": "^0.3.6",
     "benchmark": "^2.1.4",
     "eslint": "^4.16.0",
     "eslint-config-standard": "^10.2.1",

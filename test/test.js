@@ -119,56 +119,37 @@ function createReq (url, originalUrl) {
 * New additional tests
 */
 
+const massage = obj => {
+  if (obj) {
+    Object.keys(obj).forEach((p) => {
+      if (obj[p] === null) obj[p] = void (0)
+    })
+  }
+}
+
 describe('should parse the same as parseurl', function () {
-  const fixtures = [
-    undefined,
-    '',
-    '/',
-    '/////',
-    '/this/is/a/path',
-    '/this/is/a/path',
-    '/path/with/tailing/spaces     \t',
-    '/this/is/a/path/?a=1&b=2',
-    '/this/is/a/path/?a=1&b=2#hash',
-    '/this/is/a/path/a=1&b=2',
-    '/this/is/a/path#hash',
-    '/this/is/a/path?#hash',
-    '?a=1&b=2',
-    'a=1&b=2',
-    '#hash',
-    'www.host.name',
-    'http://www.host.name',
-    'https://www.host.name',
-    'https://127.0.0.127',
-    'https://[2001:0db8:0000:0042:0000:8a2e:0370:7334]:3000',
-    'https://[2001:db8::ff00:42:8329]/path',
-    'https://[2001:db8::ff00:42:8329]:8080/path',
-    'https://[::1]/path',
-    'ftp://www.host.name',
-    'gopher://www.host.name',
-    'http://www.host.name/this/is/a/path',
-    'http://www.host.name/this/is/a/path/?a=1&b=2',
-    'http://www.host.name/this/is/a/path/?a=1&b=2#hash',
-    'http://www.host.name:8080',
-    'http://www.host.name:8080/this/is/a/path',
-    'http://www.host.name:8080/this/is/a/path/?a=1&b=2',
-    'http://www.host.name:8080/this/is/a/path/?a=1&b=2#hash',
-    'http://basic:auth@www.host.name',
-    'http://basic:auth@www.host.name/this/is/a/path',
-    'http://basic:auth@www.host.name/this/is/a/path/?a=1&b=2',
-    'http://basic:auth@www.host.name/this/is/a/path/?a=1&b=2#hash'
-  ]
+  const fixtures = require('./fixtures/urls.js')
   fixtures.forEach((url) => {
     it(String(url), function () {
       const res = parseurl({url})
       const exp = origParseurl({url})
+      massage(exp)
       // console.log('%o\n%o',res, exp)
-      if (exp) {
-        Object.keys(exp).forEach((p) => {
-          if (exp[p] === null) exp[p] = void (0)
-        })
-      }
       assert.deepEqual(res, exp)
+    })
+  })
+})
+
+describe('should safe fail using non-server relevant urls', function () {
+  const fixtures = require('./fixtures/bad-urls.js')
+  fixtures.forEach((url) => {
+    it(String(url), function () {
+      const res = parseurl({url})
+      const exp = origParseurl({url})
+      massage(exp)
+      assert.throws(() => {
+        assert.deepEqual(res, exp)
+      }, /AssertionError/)
     })
   })
 })

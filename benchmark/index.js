@@ -1,4 +1,4 @@
-const Benchmark = require('benchmark')
+const {Suite} = require('benchmark')
 
 const node = require('url')
 const parseurl = require('parseurl')
@@ -14,7 +14,7 @@ const rpad = (str, n = 16) => (str + Array(n).fill(' ').join('')).substr(0, n)
 
 console.log('\n---- url ----\n')
 
-Benchmark.Suite()
+Suite()
   .add(rpad('node url.parse'), function () {
     const url = getUrl()
     node.parse(url)
@@ -33,11 +33,11 @@ Benchmark.Suite()
   .on('complete', function () {
     console.log('Fastest is ' + this.filter('fastest').map('name'))
   })
-  .run({ 'async': false })
+  .run({async: false})
 
 console.log(`\n---- long url ~${LEN} chars ----\n`)
 
-Benchmark.Suite()
+Suite()
   .add(rpad('node url.parse'), function () {
     const url = getLongUrl()
     node.parse(url)
@@ -56,4 +56,4 @@ Benchmark.Suite()
   .on('complete', function () {
     console.log('Fastest is ' + this.filter('fastest').map('name'))
   })
-  .run({ 'async': false })
+  .run({async: false})

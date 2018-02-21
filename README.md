@@ -6,9 +6,12 @@
 [![Build Status](https://secure.travis-ci.org/commenthol/parseurl-fast.svg?branch=master)](https://travis-ci.org/commenthol/parseurl-fast)
 
 Parses an url with memoization using a single safe regex.
+Targets node only, so don't try to use in browser.
+Focuses on urls used at the server side.
+
 Returns same parsing result as [url.parse][] except:
-- Does not parse file URIs `file://`
 - Does not parse `javascript` URIs
+- Does not parse some schemes. Please check `excludes` in `test/conformance.test.js`
 
 ## Usage
 
@@ -38,24 +41,24 @@ $ npm run benchmark
 
 ---- url ----
 
-node url.parse   x 91,182 ops/sec ±2.89% (77 runs sampled)
-parseurl         x 95,542 ops/sec ±1.62% (87 runs sampled)
-parseurl-fast    x 369,557 ops/sec ±2.81% (86 runs sampled)
-Fastest is parseurl-fast   
+node url.parse   x 93,003 ops/sec ±2.51% (84 runs sampled)
+parseurl         x 96,880 ops/sec ±1.43% (86 runs sampled)
+parseurl-fast    x 315,786 ops/sec ±1.67% (90 runs sampled)
+Fastest is parseurl-fast
 
 ---- long url ~8000 chars ----
 
-node url.parse   x 2,698 ops/sec ±1.59% (88 runs sampled)
-parseurl         x 2,748 ops/sec ±1.33% (88 runs sampled)
-parseurl-fast    x 77,960 ops/sec ±2.06% (89 runs sampled)
-Fastest is parseurl-fast  
+node url.parse   x 2,820 ops/sec ±1.42% (88 runs sampled)
+parseurl         x 2,842 ops/sec ±1.14% (90 runs sampled)
+parseurl-fast    x 73,371 ops/sec ±1.91% (90 runs sampled)
+Fastest is parseurl-fast
 ```
 
 ## Security recommendations
 
 This module can parse an infinite number of chars.
 To comply with [RFC 7230 Section 3.1.1][] which recommends a minimum of 8000 octets,
-you should limit the max. number of chars to such extent.
+you should limit the max. number of chars to such or even smaller extent (depends on your app).
 In such case respond with a 414 status code.
 The longer the urls the longer the parsing.
 
@@ -76,12 +79,19 @@ app.use((req, res, next) => {
 })
 ```
 
-This module uses Regular Expressions for parsing, which may be subject to [ReDoS][] attacks. Anyhow those expressions implemented should not contain any nondeterministic/ harmful states. `npm run redos`, which runs the [redos](https://npmjs.org/package/redos) tool, was used to trace irregularities during development.
+This module uses Regular Expressions for parsing, which may be subject to [ReDoS][] attacks. Anyhow those expressions implemented should not contain any nondeterministic/ harmful states. The [redos](https://npmjs.org/package/redos) tool, was used to trace irregularities during development - check with `npm run redos`.
 
 ## License
 
 [MIT Licensed](./LICENSE.md)
 
+
+## References
+
+- [url.parse][]
+- [parseurl][]
+
 [url.parse]: https://nodejs.org/api/url.html#url_url_parse_urlstring_parsequerystring_slashesdenotehost
 [RFC 7230 Section 3.1.1]: https://tools.ietf.org/html/rfc7230#section-3.1.1
 [ReDoS]: https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS
+[parseurl]: 'https://npmjs.com/package/parseurl'

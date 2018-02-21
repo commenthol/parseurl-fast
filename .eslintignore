@@ -2,3 +2,4 @@ coverage
 dist
 lib
 benchmark/url.js
+test/fixtures/url-tests.js

@@ -32,5 +32,10 @@ module.exports = [
   'http://basic:auth@www.host.name',
   'http://basic:auth@www.host.name/this/is/a/path',
   'http://basic:auth@www.host.name/this/is/a/path/?a=1&b=2',
-  'http://basic:auth@www.host.name/this/is/a/path/?a=1&b=2#hash'
+  'http://basic:auth@www.host.name/this/is/a/path/?a=1&b=2#hash',
+  // no regex matches
+  'aaaaaaaaaaaaaaaaaaaaaaaaaa',
+  '@@@@',
+  'a=1&b=2',
+  'www.host.name'
 ]

@@ -140,6 +140,7 @@ describe('should parse the same as parseurl', function () {
   })
 })
 
+/*
 describe('should safe fail using non-server relevant urls', function () {
   const fixtures = require('./fixtures/bad-urls.js')
   fixtures.forEach((url) => {
@@ -153,3 +154,4 @@ describe('should safe fail using non-server relevant urls', function () {
     })
   })
 })
+*/

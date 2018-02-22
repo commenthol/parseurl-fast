@@ -16,7 +16,7 @@ const HOSTNAME_PORT = new RegExp(`^${HOSTNAME}${PORT}$`)
 function parse (url) {
   let href = url.trim()
   let [_a, protocol, slashes, auth, host, pathname, search, hash] = URL.exec(href) || // eslint-disable-line no-unused-vars
-    [undefined, undefined, undefined, undefined, href, undefined, undefined]
+    [undefined, undefined, undefined, undefined, undefined, href, undefined, undefined]
   let [_b, hostname, port] = host ? HOSTNAME_PORT.exec(host) : [] // eslint-disable-line no-unused-vars
   if (slashes && hostname && !pathname) {
     pathname = '/'

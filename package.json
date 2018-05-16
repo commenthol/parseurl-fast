@@ -27,7 +27,7 @@
     "clean": "rimraf node_modules",
     "coverage": "nyc -r lcov -r text npm test",
     "lint": "eslint --cache '**/*.js'",
-    "redos": "redos index.js",
+    "redos": "redos index.js && node index.js > regex.js && redos regex.js && rm regex.js",
     "test": "node scripts/dl.js && mocha"
   },
   "dependencies": {},

@@ -1,53 +1,48 @@
 const assert = require('assert')
-const {parse, resolve} = require('url')
+const {parse} = require('url')
+const {massage, isNull} = require('./support.js')
 const parseurl = require('..')
 const fixtures = require('./fixtures/url-tests.js')
 
 const excludes = [
-  /// strange schemes
-  'a:%09%20foo.com',
-  'lolscheme:x%20x#x%20x',
-  /// port number exceeds 5 digits
-  'http://f:00000000000000/c',
-  'http://f:00000000000000000000080/c',
-  'javascript:example.com/',
-  'http://@www.example.com/',
-  /// hostname missing
+  'a: foo.com',
+  'lolscheme:x x#x%20x', // strange scheme
+  'http://&a:foo(b%5Dc@d:2/',
+  'http://:%3A%40c@d:2/',
+  'javascript:example.com/', // no support for hostless protocols
+  'sc://fa%C3%9F.ExAmPlE/',
+  'data:,#x', // `,` detected as hostname
+  'sc://%C3%B1.test/',
+  'sc://%1F!"$&\'()*+,-.;<=>^_`{|}~/',
+  'sc://%/', // false detected hostname
+  'sc://%C3%B1/x', // correct detected hostname but different
+  'sc:\\../', // no host scheme checking
   'wow:%NBD',
   'wow:%1G',
-  'ftp://%e2%98%83/',
-  'https://%e2%98%83/',
-  'about:\u0000\u001b\u0004\u0012%20http://example.com/\u001f',
-  'about:h%09t%0At%0Dp://h%09o%0As%0Dt:9%090%0A0%0D0/p%09a%0At%0Dh?q%09u%0Ae%0Dry#f%09r%0Aa%0Dg',
-  /// parseurl-fast always add a tailing `/` as path
-  'sc://i',
-  'sc://x',
-  'sc://xn--ida',
-  'sc://xn--ida?x',
-  'sc://xn--ida#x',
-  'a://test-a-colon-slash-slash.html',
-  'a://test-a-colon-slash-slash-b.html'
+  'file://host/dir/C|a',
+  'sc://%C3%B1',
+  'sc://%C3%B1?x',
+  'sc://%C3%B1#x',
+  'urn:ietf:rfc:2648', // strange scheme
+  'tag:joe@example.org,2001:foo/bar', // bad segementation at sub-delims boundary
+  'non-special://%E2%80%A0/', // bad hostname
+  'non-special://H%4fSt/path',
+  'blob:https://example.com:443/' // bad href
 ]
-
-const massage = obj => {
-  Object.keys(obj).forEach(p => {
-    if (obj[p] === undefined) obj[p] = null
-  })
-  delete obj._raw
-  return obj
-}
 
 describe('conformance', function () {
   fixtures.forEach(test => {
-    const resolved = resolve(test.base || '', test.input || '')
+    const resolved = test.href // resolve(test.base || '', test.input || '')
     if (test.failure || !resolved || excludes.includes(resolved)) return
     it('' + resolved, function () {
-      const exp = parse(resolved)
-      const res = massage(parseurl({url: resolved}))
-      // console.log('%o', res)
-      if (exp.hostname === '' && res.hostname === null) res.hostname = ''
-      if (exp.host === null && res.host === '') res.host = null // only affects "javascript:"
-      assert.deepEqual(res, exp)
+      const _exp = parse(resolved)
+      const exp = massage(_exp)
+      const res = parseurl({url: resolved})
+      // console.log('%o %o', res, _exp)
+      if (exp.hostname === '' && isNull(res.hostname)) res.hostname = exp.hostname
+      if (isNull(exp.host) && isNull(res.host)) res.host = exp.host
+      if (!exp._raw) exp._raw = res._raw
+      assert.deepStrictEqual(res, exp)
     })
   })
 })

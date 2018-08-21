@@ -36,22 +36,24 @@ const parsed = parseurl({url})
 
 ## Benchmarks
 
+node v8.11.4
+
 ```
 $ npm run benchmark
 
 ---- url ----
 
-node url.parse   x 93,003 ops/sec ±2.51% (84 runs sampled)
-parseurl         x 96,880 ops/sec ±1.43% (86 runs sampled)
-parseurl-fast    x 315,786 ops/sec ±1.67% (90 runs sampled)
-Fastest is parseurl-fast
+node url.parse   x 82,267 ops/sec ±1.70% (83 runs sampled)
+parseurl         x 83,700 ops/sec ±1.10% (90 runs sampled)
+parseurl-fast    x 231,092 ops/sec ±1.26% (91 runs sampled)
+Fastest is parseurl-fast   
 
 ---- long url ~8000 chars ----
 
-node url.parse   x 2,820 ops/sec ±1.42% (88 runs sampled)
-parseurl         x 2,842 ops/sec ±1.14% (90 runs sampled)
-parseurl-fast    x 73,371 ops/sec ±1.91% (90 runs sampled)
-Fastest is parseurl-fast
+node url.parse   x 1,945 ops/sec ±0.49% (92 runs sampled)
+parseurl         x 1,929 ops/sec ±0.34% (94 runs sampled)
+parseurl-fast    x 10,051 ops/sec ±0.57% (90 runs sampled)
+Fastest is parseurl-fast   
 ```
 
 ## Security recommendations
@@ -85,13 +87,16 @@ This module uses Regular Expressions for parsing, which may be subject to [ReDoS
 
 [MIT Licensed](./LICENSE.md)
 
-
 ## References
 
 - [url.parse][]
 - [parseurl][]
+- [RFC 3986][]
+- [url.spec.whatwg][]
 
 [url.parse]: https://nodejs.org/api/url.html#url_url_parse_urlstring_parsequerystring_slashesdenotehost
+[RFC 3986]: https://tools.ietf.org/html/rfc3986
 [RFC 7230 Section 3.1.1]: https://tools.ietf.org/html/rfc7230#section-3.1.1
+[url.spec.whatwg]: https://url.spec.whatwg.org/
 [ReDoS]: https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS
-[parseurl]: 'https://npmjs.com/package/parseurl'
+[parseurl]: https://npmjs.com/package/parseurl

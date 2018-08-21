@@ -11,6 +11,9 @@ module.exports = [
   '/this/is/a/path/a=1&b=2',
   '/this/is/a/path#hash',
   '/this/is/a/path?#hash',
+  '/this/../is/a/path',
+  '/this/../../is/a/path',
+  '/.././../',
   '?a=1&b=2',
   '#hash',
   'http://www.host.name',
@@ -33,9 +36,14 @@ module.exports = [
   'http://basic:auth@www.host.name/this/is/a/path',
   'http://basic:auth@www.host.name/this/is/a/path/?a=1&b=2',
   'http://basic:auth@www.host.name/this/is/a/path/?a=1&b=2#hash',
-  // no regex matches
+  /// no regex matches
   'aaaaaaaaaaaaaaaaaaaaaaaaaa',
   '@@@@',
   'a=1&b=2',
-  'www.host.name'
+  'www.host.name',
+  /// XSS
+  'http://site.com/?s=login&m=forgotten" onload=alert("xss") bad="',
+  'https://site.com/reflect.php?param=<script>alert("xss");</script>',
+  /// NoSQL injection
+  'http://site.com/users/{"$ne":null}'
 ]

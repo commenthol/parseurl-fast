@@ -52,8 +52,10 @@ function parseurl (req) {
 
 module.exports = parseurl
 
+/* eslint-disable no-console */
+/* istanbul ignore if */
 if (module === require.main) {
   // for redos tests print regexes
-  console.log('const UrlRegex = ', URL) // eslint-disable-line no-console
-  console.log('const HostRegex = ', HOSTNAME_PORT) // eslint-disable-line no-console
+  console.log('const UrlRegex = ', URL)
+  console.log('const HostRegex = ', HOSTNAME_PORT)
 }
